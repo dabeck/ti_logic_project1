@@ -5,4 +5,8 @@ public class Variable extends Formula {
     public Variable(String x) {
     	name = x;
     }
+	
+	public String getVar() {
+		return name;
+	}
 }
