@@ -4,6 +4,9 @@
 // Sat Nov 16 18:36:27 CET 2013
 //----------------------------------------------------
 
+import java.util.HashMap;
+import java.util.Map;
+
 import java_cup.runtime.*;
 
 /** CUP v0.11a beta 20060608 generated parser.
@@ -230,7 +233,9 @@ class CUP$parser$actions {
 		int xleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int xright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String x = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new Variable(x);        
+		if(!varMap.containsKey(x))
+			 varMap.put(x, new Variable(x));
+		RESULT = varMap.get(x);
               CUP$parser$result = parser.getSymbolFactory().newSymbol("formula",0, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -242,5 +247,7 @@ class CUP$parser$actions {
 
         }
     }
+  
+  private final Map<String, Variable> varMap = new HashMap<String,Variable>();
 }
 
