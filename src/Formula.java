@@ -1,10 +1,10 @@
 public abstract class Formula {
 
-	public Formula get_left_arg() {
+	public Formula getLeftArg() {
 		return null;
 	}
 	
-	public Formula get_right_arg() {
+	public Formula getRightArg() {
 		return null;
 	}
 }

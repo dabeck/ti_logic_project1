@@ -7,11 +7,11 @@ public class Conjunction extends Formula {
 		right_arg = g;
     }
 
-    public Formula get_left_arg() {
+    public Formula getLeftArg() {
     	return left_arg;
     }
 
-    public Formula get_right_arg() {
+    public Formula getRightArg() {
     	return right_arg;
     }
 }
