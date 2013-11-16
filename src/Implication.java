@@ -8,10 +8,10 @@ public class Implication extends Formula {
     }
 
     public Formula get_left_arg() {
-		return left_arg;
+    	return left_arg;
     }
 
     public Formula get_right_arg() {
-		return right_arg;
+    	return right_arg;
     }
 }

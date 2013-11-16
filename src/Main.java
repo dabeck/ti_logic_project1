@@ -12,6 +12,7 @@ public class Main {
 		try {
 		    parser p = new parser(new Scanner(new StringReader("-A & (B | -(C <-> HalloWelt) | (-B -> A -> -C))")));
 		    Formula f = (Formula) p.parse().value;
+		    System.out.println( f );
 		}
 		catch (Exception e) {
 		}
