@@ -6,7 +6,7 @@ public class Negation extends Formula {
     	arg = f;
     }
 
-    public Formula get_arg() {
+	public Formula getLeftArg() {
     	return arg;
     }
 }

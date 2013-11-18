@@ -138,7 +138,7 @@ class CUP$parser$actions {
 		int gleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int gright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Formula g = (Formula)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new Biimplication(f,g); 
+		 RESULT = new Equivalence(f,g); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("formula",0, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
