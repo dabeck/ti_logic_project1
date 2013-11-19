@@ -14,7 +14,14 @@ public class Main {
 			parser p = new parser(new Scanner(new StringReader(
 			        "-A & (B | -(C <-> D) | (-B -> A -> -C))")));
 
-		    Formula f = (Formula) p.parse().value;
+			// parse die Formel
+			Formula f = (Formula) p.parse().value;
+			System.out.println( "Parsed:\t" + f );
+			
+			// Konvertiere nach KNF
+			// ToDo: noch nicht komplett
+			/*f = Converter.convert_to_cnf( f );
+			System.out.println( "-> KNF:\t" + f );*/
 			
 			ArrayList<Formula> forms = new ArrayList<Formula>();
 
