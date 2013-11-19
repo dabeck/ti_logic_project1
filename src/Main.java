@@ -20,7 +20,7 @@ public class Main {
 			
 			// Konvertiere nach KNF
 			// ToDo: noch nicht komplett
-			/*f = Converter.convert_to_cnf( f );
+			/*f = Convert.toCnf( f );
 			System.out.println( "-> KNF:\t" + f );*/
 			
 			ArrayList<Formula> forms = new ArrayList<Formula>();
@@ -29,6 +29,7 @@ public class Main {
 		
 		}
 		catch (Exception e) {
+			System.out.println( "Fehler:\t" + e.toString() );
 		}
     }
 	
