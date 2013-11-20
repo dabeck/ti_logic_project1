@@ -5,7 +5,6 @@ import formula;
 */
 
 import java.io.StringReader;
-import java.util.ArrayList;
 
 public class Main {
 
@@ -16,8 +15,6 @@ public class Main {
 
 		    Formula f = (Formula) p.parse().value;
 			
-			ArrayList<Formula> forms = new ArrayList<Formula>();
-
 			parseTree(f);
 		
 		}
