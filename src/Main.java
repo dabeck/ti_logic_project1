@@ -13,12 +13,20 @@ public class Main {
 			parser p = new parser(new Scanner(new StringReader(
 			        "-A & (B | -(C <-> D) | (-B -> A -> -C))")));
 
-		    Formula f = (Formula) p.parse().value;
+			// parse die Formel
+			Formula f = (Formula) p.parse().value;
+			System.out.println( "Parsed:\t" + f );
+			
+			// Konvertiere nach KNF
+			// ToDo: noch nicht komplett
+			/*f = Convert.toCnf( f );
+			System.out.println( "-> KNF:\t" + f );*/
 			
 			parseTree(f);
 		
 		}
 		catch (Exception e) {
+			System.out.println( "Fehler:\t" + e.toString() );
 		}
     }
 	
