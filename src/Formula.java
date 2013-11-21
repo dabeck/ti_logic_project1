@@ -41,6 +41,30 @@ public abstract class Formula {
 		
 		return result.toString();
 	}
+	
+	public Formula getArg(Character direction)
+	{
+		switch (TYPES.valueOf(this.getClass().getSimpleName()))
+		{
+			case Equivalence:
+				Equivalence e = (Equivalence)this;
+				return (direction == 'L') ? e.getLeftArg(): e.getRightArg();
+			case Conjunction:
+				Conjunction c = (Conjunction)this;
+				return (direction == 'L') ? c.getLeftArg(): c.getRightArg();
+			case Disjunction:
+				Disjunction d = (Disjunction)this;
+				return (direction == 'L') ? d.getLeftArg(): d.getRightArg();
+			case Implication:
+				Implication i = (Implication)this;
+				return (direction == 'L') ? i.getLeftArg(): i.getRightArg();
+			case Negation:
+				Negation n = (Negation)this;
+				return (direction == 'L') ? n.getLeftArg(): n.getLeftArg();
+		}
+		
+		return null;
+	}
 }
 
 enum TYPES {

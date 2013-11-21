@@ -20,7 +20,7 @@ public class Main {
 					//"-(A & B)"	// KNF korrekt: (-A | -B)
 					//"-(A | B)"	// KNF korrekt: (-A & -B)
 					//"A -> B"		// KNF korrekt: (-A | B)
-					//"A <-> B"		// KNF noch nicht korrekt! 
+					//"A <-> B"		// KNF korrekt:  ((A | -B) & (-A | B))
 			        "-A & (B | -(C <-> D) | (-B -> A -> -C))"
 				)));
 

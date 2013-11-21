@@ -12,38 +12,36 @@ public class Convert {
 		
 		if (f instanceof Negation)
 		{
-			Negation n = (Negation)f;
-			
 			// -A
-			if (getArg(n, true) instanceof Variable)
+			if (f.getArg('L') instanceof Variable)
 			{
 				return f;
 			}
 			// -(-A)
-			else if (getArg(n, true) instanceof Negation)
+			else if (f.getArg('L') instanceof Negation)
 			{
-				return toCnf( getArg(getArg(n, true), true) );
+				return toCnf( f.getArg('L').getArg('L') );
 			}
 			// -( & )
-			else if (getArg(n, true) instanceof Conjunction)
+			else if (f.getArg('L') instanceof Conjunction)
 			{
-				return new Disjunction(new Negation(getArg(getArg(n, true), true)), new Negation(getArg(getArg(n, true), false)));
+				return new Disjunction(new Negation(f.getArg('L').getArg('L')), new Negation(f.getArg('L').getArg('R')));
 			}
 			// -( | )
-			else if (getArg(n, true) instanceof Disjunction)
+			else if (f.getArg('L') instanceof Disjunction)
 			{
-				return new Conjunction(new Negation(getArg(getArg(n, true), true)), new Negation(getArg(getArg(n, true), false)));
+				return new Conjunction(new Negation(f.getArg('L').getArg('L')), new Negation(f.getArg('L').getArg('R')));
 			}
 			// -(...)
 			else
 			{
-				return toCnf(getArg(n, true));
+				return toCnf(f.getArg('L'));
 			}
 		}
 		
 		
 		
-		Formula cnfLeft = toCnf(getArg(f, true)), cnfRight = toCnf(getArg(f, false));
+		Formula cnfLeft = toCnf(f.getArg('L')), cnfRight = toCnf(f.getArg('R'));
 		
 		
 		
@@ -73,8 +71,8 @@ public class Convert {
 					(cnfRight instanceof Negation || cnfRight instanceof Variable || cnfRight instanceof Disjunction)
 				)
 			{
-				Formula newL = new Disjunction(getArg(cnfLeft, true), cnfRight);
-				Formula newR = new Disjunction(getArg(cnfLeft, false), cnfRight);
+				Formula newL = new Disjunction(cnfLeft.getArg('L'), cnfRight);
+				Formula newR = new Disjunction(cnfLeft.getArg('R'), cnfRight);
 				
 				return new Conjunction(toCnf(newL), toCnf(newR));
 			}
@@ -86,8 +84,8 @@ public class Convert {
 					(cnfRight instanceof Conjunction)
 				)
 			{
-				Formula newL = new Disjunction(cnfLeft, getArg(cnfRight, false));
-				Formula newR = new Disjunction(cnfLeft, getArg(cnfRight, true));
+				Formula newL = new Disjunction(cnfLeft, cnfRight.getArg('R'));
+				Formula newR = new Disjunction(cnfLeft, cnfRight.getArg('L'));
 				
 				return new Conjunction(toCnf(newL), toCnf(newR));
 			}
@@ -100,12 +98,12 @@ public class Convert {
 				)
 			{
 				Formula newL = new Conjunction (
-						new Disjunction (getArg(cnfLeft, true), getArg(cnfRight, true)),
-						new Disjunction (getArg(cnfLeft, false), getArg(cnfRight, true))
+						new Disjunction (cnfLeft.getArg('L'), cnfRight.getArg('L')),
+						new Disjunction (cnfLeft.getArg('R'), cnfRight.getArg('L'))
 					);
 				Formula newR = new Conjunction (
-						new Disjunction (getArg(cnfLeft, true), getArg(cnfRight, true)),
-						new Disjunction (getArg(cnfLeft, false), getArg(cnfRight, true))
+						new Disjunction (cnfLeft.getArg('L'), cnfRight.getArg('L')),
+						new Disjunction (cnfLeft.getArg('R'), cnfRight.getArg('L'))
 					);
 				
 				return new Conjunction(toCnf(newL), toCnf(newR));
@@ -116,58 +114,29 @@ public class Convert {
 		
 		if (f instanceof Equivalence)
 		{
-			Equivalence e = (Equivalence)f;
-			return toCnf(
-						new Disjunction(
-									new Conjunction(e.getLeftArg(), e.getRightArg()),
-									new Conjunction(
-												new Negation(e.getLeftArg()),
-												new Negation(e.getRightArg())
-											)
-								)
-					);
+			Formula newL = new Disjunction (f.getArg('L'), new Negation(f.getArg('R')));
+			Formula newR = new Disjunction (new Negation(f.getArg('L')), f.getArg('R'));
+			
+			return toCnf(new Conjunction(
+					new Disjunction (f.getArg('L'), new Negation(f.getArg('R'))),
+					new Disjunction (new Negation(f.getArg('L')), f.getArg('R'))
+					));
 		}
 		
 		
 		
 		if (f instanceof Implication)
 		{
-			Implication i = (Implication)f;
 			return toCnf(
 						new Disjunction(
-								new Negation(i.getLeftArg()),
-								i.getRightArg()
+								new Negation(f.getArg('L')),
+								f.getArg('R')
 							)
 					);
 		}
 		
 		
-		
 		System.out.println("Convert.toCnf(): ERROR");
-		return null;
-	}
-	
-	private static Formula getArg(Formula f, boolean wantLeft)
-	{
-		switch (TYPES.valueOf(f.getClass().getSimpleName()))
-		{
-			case Equivalence:
-				Equivalence e = (Equivalence)f;
-				return (wantLeft) ? e.getLeftArg(): e.getRightArg();
-			case Conjunction:
-				Conjunction c = (Conjunction)f;
-				return (wantLeft) ? c.getLeftArg(): c.getRightArg();
-			case Disjunction:
-				Disjunction d = (Disjunction)f;
-				return (wantLeft) ? d.getLeftArg(): d.getRightArg();
-			case Implication:
-				Implication i = (Implication)f;
-				return (wantLeft) ? i.getLeftArg(): i.getRightArg();
-			case Negation:
-				Negation n = (Negation)f;
-				return (wantLeft) ? n.getLeftArg(): n.getLeftArg();
-		}
-		
 		return null;
 	}
 }
