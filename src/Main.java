@@ -12,16 +12,16 @@ public class Main {
 		try {
 			parser p = new parser(new Scanner(new StringReader(
 			// "A" // KNF korrekt: A
-					//"-A"			// KNF korrekt: -A
-					//"-(-A)"		// KNF korrekt: A
-			        "A & B & -C & A" // KNF korrekt: (A & B)
-					//"A | B"		// KNF korrekt: (A | B)
+			// "-A" // KNF korrekt: -A
+			// "-(-A)" // KNF korrekt: A
+			// "A & B" // KNF korrekt: (A & B)
+			// "A | B" // KNF korrekt: (A | B)
 					//"-(A & B)"	// KNF korrekt: (-A | -B)
 					//"-(A | B)"	// KNF korrekt: (-A & -B)
 					//"A -> B"		// KNF korrekt: (-A | B)
 			        // "-A & (B | -(C <-> D) | (-B -> A -> -C))"
 					//"A <-> B"		// KNF korrekt:  ((A | -B) & (-A | B))
-			// "-A & (B | -(C <-> D) | (-B -> A -> -C))"
+			        "-A & (B | -(C <-> D) | (-B -> A -> -C))"
 				)));
 
 			// parse die Formel
@@ -33,10 +33,11 @@ public class Main {
 			Formula g = Convert.toCnf( f );
 			// System.out.println( "-> KNF:\t" + g );
 			
-			System.out.println("Input vars: " + Satisfiability.parseTree(f));
-			
-			Satisfiability.check(f);
-
+			if (Satisfiability.check(g)) {
+				System.out.println("Die gegebene Formel ist erfüllbar!");
+			} else {
+				System.out.println("Die gegebene Formel ist NICHT erfüllbar!");
+			}
 		
 		}
 		catch (Exception e) {
