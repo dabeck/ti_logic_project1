@@ -8,8 +8,8 @@ public class Variable extends Formula {
 		value = true;
     }
 	
-	public void setValue(boolean i) {
-		value = i;
+	public void setValue(boolean b) {
+		value = b;
 	}
 	
 	public Boolean getValue() {
