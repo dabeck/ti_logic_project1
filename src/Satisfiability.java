@@ -7,20 +7,8 @@ public class Satisfiability {
 	public static boolean check(Formula f) {
 		int val = parseTree(f).size();
 
-		String out = "";
-		
-		for (int i = 0; i < val; ++i) {
-			out += "0"; // Build prefix buffer
-		}
-
 		for (int i = 0; i < Math.pow(2, val); i++) {
-			if (val - Integer.toBinaryString(i).length() > 0) {
-				System.out.println(out.substring(1, val
-				        - Integer.toBinaryString(i).length() + 1)
-				        + Integer.toBinaryString(i));
-			} else {
-				System.out.println(Integer.toBinaryString(i));
-			}
+			System.out.println(Integer.toBinaryString(i));
 		}
 		
 		// TODO: evaluate every binary combination
