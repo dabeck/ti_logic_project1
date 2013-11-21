@@ -12,18 +12,19 @@ public class Satisfiability {
 	 * @return true if the given formula is satisfiable
 	 */
 	public static boolean check(Formula f) {
-		int val = parseTree(f).size();
+		ArrayList<Variable> vars = parseTree(f);
+		int numVars = vars.size();
 
-		for (int i = 0; i < Math.pow(2, val); i++) {
-			for (int j = 0; j < val; j++) {
+		for (int i = 0; i < Math.pow(2, numVars); i++) {
+			for (int j = 0; j < numVars; j++) {
 				if ((i & (int) Math.pow(2, j)) > 0) {
-					parseTree(f).get(j).setValue(true);
+					vars.get(j).setValue(true);
 				} else {
-					parseTree(f).get(j).setValue(false);
+					vars.get(j).setValue(false);
 				}
 			}
 			if (evaluate(f)) {
-				for (Variable v : parseTree(f)) {
+				for (Variable v : vars) {
 					System.out.print((v.getValue()) ? 1 : 0);
 					System.out.print(" ");
 				}
