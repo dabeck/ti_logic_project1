@@ -8,8 +8,8 @@ public class Variable extends Formula {
 		value = true;
     }
 	
-	public void setValue(Boolean val) {
-		value = val;
+	public void setValue(boolean i) {
+		value = i;
 	}
 	
 	public Boolean getValue() {
@@ -19,4 +19,21 @@ public class Variable extends Formula {
 	public String getVar() {
 		return name;
 	}
+	
+	@Override
+	public boolean equals(Object object) {
+		boolean sameSame = false;
+		
+		if (object != null && object instanceof Variable) {
+			sameSame = this.name.equals(((Variable) object).name);
+		}
+		
+		return sameSame;
+	}
+	
+	@Override
+	public int hashCode() {
+		return Integer.valueOf(this.name);
+	}
+
 }

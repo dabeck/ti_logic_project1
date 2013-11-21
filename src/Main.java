@@ -11,16 +11,16 @@ public class Main {
     public static void main(String[] args) {
 		try {
 			parser p = new parser(new Scanner(new StringReader(
-					//"A"			// KNF korrekt: A
+			// "A" // KNF korrekt: A
 					//"-A"			// KNF korrekt: -A
 					//"-(-A)"		// KNF korrekt: A
-					//"A & B"		// KNF korrekt: (A & B)
+			        "A & B & -C & A" // KNF korrekt: (A & B)
 					//"A | B"		// KNF korrekt: (A | B)
 					//"-(A & B)"	// KNF korrekt: (-A | -B)
 					//"-(A | B)"	// KNF korrekt: (-A & -B)
 					//"A -> B"		// KNF korrekt: (-A | B)
 					//"A <-> B"		// KNF noch nicht korrekt! 
-			        "-A & (B | -(C <-> D) | (-B -> A -> -C))"
+			        // "-A & (B | -(C <-> D) | (-B -> A -> -C))"
 				)));
 
 			// parse die Formel
@@ -30,9 +30,12 @@ public class Main {
 			// Konvertiere nach KNF
 			// ToDo: noch nicht komplett
 			Formula g = Convert.toCnf( f );
-			System.out.println( "-> KNF:\t" + g );
+			// System.out.println( "-> KNF:\t" + g );
 			
-			Satisfiability.parseTree(f);
+			System.out.println("Input vars: " + Satisfiability.parseTree(f));
+			
+			Satisfiability.check(f);
+
 		
 		}
 		catch (Exception e) {

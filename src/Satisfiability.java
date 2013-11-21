@@ -1,43 +1,97 @@
+import java.util.ArrayList;
+
 
 
 public class Satisfiability {
-
 	
-	public static void parseTree(Formula x) {
-		System.out.print("(");
-		if (x instanceof Negation) {
-			System.out.print("NOT ");
+	public static boolean check(Formula f) {
+		int val = parseTree(f).size();
+
+		String out = "";
+		
+		for (int i = 0; i < val; ++i) {
+			out += "0"; // Build prefix buffer
+		}
+
+		for (int i = 0; i < Math.pow(2, val); i++) {
+			if (val - Integer.toBinaryString(i).length() > 0) {
+				System.out.println(out.substring(1, val
+				        - Integer.toBinaryString(i).length() + 1)
+				        + Integer.toBinaryString(i));
+			} else {
+				System.out.println(Integer.toBinaryString(i));
+			}
 		}
 		
+		// TODO: evaluate every binary combination
+
+		return false;
+	}
+	
+	public static ArrayList<Variable> parseTree(Formula x) {
+		ArrayList<Variable> list = new ArrayList<Variable>();
+
 		if (x instanceof Variable) {
-			Variable s = (Variable) x;
-			System.out.print(s.getVar());
+			Variable v = (Variable) x;
+			v.setValue(true);
+			if (!list.contains(v)) {
+				list.add(v);
+			}
+			return list;
 		}
 		
 		if (x.getLeftArg() != null) {
-			parseTree(x.getLeftArg());
-		}
-		
-		if (x instanceof Conjunction) {
-			System.out.print(" AND ");
-		}
-		
-		if (x instanceof Disjunction) {
-			System.out.print(" OR ");
-		}
-		
-		if (x instanceof Implication) {
-			System.out.print(" IMPLIES ");
-		}
-		
-		if (x instanceof Equivalence) {
-			System.out.print(" EQUIVALENT ");
+			for (Variable variable : parseTree(x.getLeftArg())) {
+				if (!list.contains(variable)) {
+					list.add(variable);
+				}
+			}
 		}
 		
 		if (x.getRightArg() != null) {
-			parseTree(x.getRightArg());
+			for (Variable variable : parseTree(x.getRightArg())) {
+				if (!list.contains(variable)) {
+					list.add(variable);
+				}
+			}
 		}
-		System.out.print(")");
 		
+		return list;
+	}
+	
+	public static boolean not(boolean a) {
+		return !a;
+	}
+
+	public static boolean or(boolean a, boolean b) {
+		if (a || b) {
+			return true;
+		}
+		
+		return false;
+	}
+
+	public static boolean and(boolean a, boolean b) {
+		if(a && b) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public static boolean implies(boolean a, boolean b) {
+		if (a && !b) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public static boolean equals(boolean a, boolean b){
+		if (a == b) {
+			return true;
+		}
+
+		return false;
 	}
 }
