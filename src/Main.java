@@ -37,11 +37,13 @@ public class Main {
 			// System.out.println( "-> KNF:\t" + g );
 			
 			long startTime = System.nanoTime();
+
 			if (Satisfiability.check(f)) {
 				System.out.println("Die gegebene Formel ist erfüllbar!");
 			} else {
 				System.out.println("Die gegebene Formel ist NICHT erfüllbar!");
 			}
+
 			long estimatedTime = System.nanoTime() - startTime;
 
 			System.out.println("\n\nCalculation time: "
