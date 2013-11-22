@@ -7,41 +7,37 @@ import formula;
 import java.io.StringReader;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * SAT Solver TI Projektaufgabe 1
+ * 
+ * @author Daniel Becker - 28202534
+ * @author Peter Müller - 30201497
+ */
 public class Main {
 
     public static void main(String[] args) {
 		try {
-			parser p = new parser(new Scanner(new StringReader(
-			// "A" // KNF korrekt: A
-			// "-A" // KNF korrekt: -A
-			// "-(-A)" // KNF korrekt: A
-			// "A & B" // KNF korrekt: (A & B)
-			// "A | B" // KNF korrekt: (A | B)
-			                // "-(A & B)" // KNF korrekt: (-A | -B)
-			// "-(A | B)" // KNF korrekt: (-A & -B)
-			                        // "A -> B" // KNF korrekt: (-A | B)
-			                        // "-A & (B | -(C <-> D) | (-B -> A -> -C))"
-			                        // "A <-> B" // KNF korrekt: ((A |
-									// -B) & (-A | B))
-			                        // "(-A & B) & -(C <-> D) | (-B -> A -> -C)"
-			                        "((((((((((X0<->X1)<->X2)<->X3)<->X4)<->X5)<->X6)<->X7)<->X8)<->X9)<->X10)&(X10<->X8)&(X9<->X7)&(X8<->X6)&(X7<->X5)&(X6<->X4)&(X5<->X3)&(X4<->X2)&(X3<->X1)&(X2<->X0)&-(X1<->X0)")));
+			if (args.length <= 0 || args[0] == null) {
+				System.out
+				        .println("Please provide your formula via the first parameter!");
+				return;
+			}
+			parser p = new parser(new Scanner(new StringReader(args[0])));
 
-			// parse die Formel
+			// Parse the formula
 			Formula f = (Formula) p.parse().value;
 			System.out.println( "Parsed:\t" + f );
 			System.out.println();
 			
-			// Konvertiere nach KNF
-			// ToDo: noch nicht komplett
-			// Formula g = Convert.toCnf( f );
+			// Formula g = Convert.toCnf(f);
 			// System.out.println( "-> KNF:\t" + g );
 			
 			long startTime = System.nanoTime();
 
 			if (Satisfiability.check(f)) {
-				System.out.println("Die gegebene Formel ist erfüllbar!");
+				System.out.println("The given formula is satisfiable!");
 			} else {
-				System.out.println("Die gegebene Formel ist NICHT erfüllbar!");
+				System.out.println("The given formula is NOT satisfiable!");
 			}
 
 			long estimatedTime = System.nanoTime() - startTime;
