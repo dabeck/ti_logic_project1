@@ -4,7 +4,7 @@ import scanner;
 import formula;
 */
 
-import java.io.StringReader;
+import java.io.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -17,20 +17,23 @@ public class Main {
 
     public static void main(String[] args) {
 		try {
+			parser p;
 			if (args.length <= 0 || args[0] == null) {
-				System.out
-				        .println("Please provide your formula via the first parameter!");
-				return;
+				System.out.print("Formel: ");
+				InputStreamReader converter = new InputStreamReader(System.in);
+				BufferedReader in = new BufferedReader(converter);
+				p = new parser(new Scanner(new StringReader(in.readLine())));
+			} else {
+				p = new parser(new Scanner(new StringReader(args[0])));
 			}
-			parser p = new parser(new Scanner(new StringReader(args[0])));
 
 			// Parse the formula
 			Formula f = (Formula) p.parse().value;
 			System.out.println( "Parsed:\t" + f );
 			System.out.println();
 			
-			// Formula g = Convert.toCnf(f);
-			// System.out.println( "-> KNF:\t" + g );
+			//Formula g = Convert.toCnf(f);
+			//System.out.println( "=> KNF:\t" + g );
 			
 			long startTime = System.nanoTime();
 
