@@ -24,11 +24,16 @@ public class Satisfiability {
 				}
 			}
 			if (evaluate(f)) {
+				System.out.println("Model: ");
 				for (Variable v : vars) {
-					System.out.print((v.getValue()) ? 1 : 0);
-					System.out.print(" ");
+					System.out.print(v.getVar() + "\t");
 				}
 				System.out.println();
+				for (Variable v : vars) {
+					System.out.print((v.getValue()) ? 1 : 0);
+					System.out.print("\t");
+				}
+				System.out.println("\n");
 
 				return true;
 			}
